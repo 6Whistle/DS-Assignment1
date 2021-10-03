@@ -14,7 +14,7 @@ int UserHeapNode::GetNumUser()
 
 }
 
-char* UserHeapNode::GetAgeGroup()
+int UserHeapNode::GetAgeGroup()
 {
 
 }

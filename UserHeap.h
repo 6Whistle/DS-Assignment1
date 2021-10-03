@@ -7,8 +7,7 @@ using namespace std;
 class UserHeap
 {
 private:
-	UserHeapNode* Heap;
-	int size;
+	vector<UserHeapNode*> Heap;
 
 public:
 	UserHeap();

@@ -23,7 +23,7 @@ public:
 	void SetName(char* name);
 	void SetAge(int age);
 	void SetNext(UserListNode* node);
-	
+
 	AccountBSTNode* InsertAccount(AccountBSTNode* node);
 	void Print_Accounts();
 	void Delete_Account(char* id);

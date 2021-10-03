@@ -16,7 +16,7 @@ public:
 	UserListNode* GetRoot();
 	AccountBSTNode* Insert(AccountQueueNode* node);
 	bool Search(char* name);
-	bool Delete_Account(char* id);
+	bool Delete_Account(char* name, char* id);
 	void Print_L(UserListNode* node);
 	
 };
