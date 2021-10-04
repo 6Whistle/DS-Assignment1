@@ -29,6 +29,11 @@ UserListNode* UserListNode::GetNext()
     return pNext;
 }
 
+AccountBSTNode* UserListNode::GetHead()
+{
+    return pHead;
+}
+
 void UserListNode::SetName(char* name)
 {
     if(this->Name)
@@ -97,6 +102,7 @@ void UserListNode::Delete_Account(char* id)
     {
         temp = temp->GetNext();
     }
+
     temp->SetNext(temp->GetNext()->GetNext());
     AccNum--;
 

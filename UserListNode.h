@@ -19,6 +19,7 @@ public:
 	int GetAge();
 	int GetAccNum() {return AccNum;}
 	UserListNode* GetNext();
+	AccountBSTNode* GetHead();
 	
 	void SetName(char* name);
 	void SetAge(int age);
