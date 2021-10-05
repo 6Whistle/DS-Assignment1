@@ -19,6 +19,11 @@ UserHeap::~UserHeap()
     }
 }
 
+int UserHeap::GetSize()
+{
+    return Heap.size();
+}
+
 bool UserHeap::Insert(int agegroup)
 {
     int i = 0;
@@ -55,5 +60,14 @@ bool UserHeap::Insert(int agegroup)
 
 void UserHeap::Print()
 {
-    //PRINT H
+    ofstream flog;
+    flog.open("log.txt", ios::app);
+
+    for(int i = 1; i < Heap.size(); i++)
+    {
+        flog << Heap[i]->GetNumUser() << "/" << Heap[i]->GetAgeGroup() << endl;
+    }
+    flog.close();
+
+    return;
 }

@@ -72,7 +72,21 @@ bool UserList::Search(char* name)
     {
         if(strcmp(temp->GetName(), name) == 0)
         {
-            //print
+            ofstream flog;
+            flog.open("log.txt", ios::app);
+            flog << "========== SEARCH ==========" << endl;
+            flog << "User" << endl;
+            flog << temp->GetName() << "/" << temp->GetAge() << endl;
+            
+            AccountBSTNode* idTemp = temp->GetHead();
+            while(idTemp)
+            {
+                flog << idTemp->GetId();
+                idTemp = idTemp->GetNext();
+            }
+
+            flog << "===========================" << endl << endl; 
+            flog.close();
             return true;
         }
         temp = temp->GetNext();
@@ -138,5 +152,15 @@ bool UserList::Delete_Account(char* name, char* id)
 
 void UserList::Print_L(UserListNode* node)
 {
-    
+    if(node == NULL)
+    {
+        return;
+    }
+    ofstream flog;
+    flog.open("log.txt", ios::app);
+    flog << node->GetName() << "/" << node->GetAge() << "/" << node->GetAccNum() << endl;
+    flog.close();
+    Print_L(node->GetNext());
+
+    return;
 }
