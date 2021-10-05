@@ -47,6 +47,11 @@ bool AccountQueue::PUSH(AccountQueueNode* node)
 
     while(temp->GetNext())
     {
+        if(strcmp(temp->GetName(), node->GetName()) == 0 && temp->GetAge() == node->GetAge() && strcmp(temp->GetId(), node->GetId()) == 0)
+        {
+            delete node;
+            return false;
+        }
         temp = temp->GetNext();
     }
     temp->SetNext(node);
@@ -66,13 +71,45 @@ int AccountQueue::SIZE()
 
 void AccountQueue::PRINT()
 {
-    if(this->EMPTY())
-        return;
     
-    AccountQueueNode *temp = Front;
-    while(temp)
+    ofstream flog;
+    flog.open("log.txt", ios::app);
+
+    flog << "========== QLOAD ==========" << endl;
+
+    if(!(this->EMPTY()))
     {
-        cout << temp->GetName() << '/' << temp->GetAge() << '/' << temp->GetId() << endl;
+        AccountQueueNode *temp = Front;
+        while(temp)
+        {
+            flog << temp->GetName() << '/' << temp->GetAge() << '/' << temp->GetId() << endl;
+            temp = temp->GetNext();
+        }
+    }
+
+    flog << "===========================" << endl << endl;
+    flog.close();
+
+    return;
+}
+
+void AccountQueue::PRINTPUSH()
+{
+    ofstream flog;
+    flog.open("log.txt", ios::app);
+
+    flog << "========== ADD ==========" << endl;
+
+    AccountQueueNode *temp = Front;
+    while(temp->GetNext())
+    {
         temp = temp->GetNext();
     }
+    
+    flog << temp->GetName() << '/' << temp->GetAge() << '/' << temp->GetId() << endl;
+    temp = temp->GetNext();
+    flog << "===========================" << endl << endl;
+    flog.close();
+
+    return;
 }

@@ -32,14 +32,13 @@ void Manager::run(const char* command)
 
     while (!fin.eof())
     {
-
         fin.getline(cmd, 32);
         char * tmp = strtok(cmd, " ");
         if(strcmp(tmp, "QLOAD") == 0)
         {
             if(QLOAD())
             {
-                PrintSuccess("QLOAD");
+                ds_queue->PRINT();
             }
             else
             {
@@ -48,9 +47,10 @@ void Manager::run(const char* command)
         }
         else if(strcmp(tmp, "ADD") == 0)
         {
-            if(ADD())
+            tmp = strtok(NULL, " ");
+            if(ADD(tmp))
             {
-                PrintSuccess("ADD");
+                ds_queue->PRINTPUSH();
             }
             else
             {
@@ -59,7 +59,8 @@ void Manager::run(const char* command)
         }
         else if(strcmp(tmp, "QPOP") == 0)
         {
-            if(QPOP())
+            tmp = strtok(NULL, " ");
+            if(QPOP(tmp))
             {
                 PrintSuccess("QPOP");
             }
@@ -70,29 +71,24 @@ void Manager::run(const char* command)
         } 
         else if(strcmp(tmp, "SEARCH") == 0)
         {
-            if(SEARCH())
-            {
-                PrintSuccess("SEARCH");
-            }
-            else
+            tmp = strtok(NULL, " ");
+            if(!SEARCH(tmp))
             {
                 PrintErrorCode(400);
             }
         }
         else if(strcmp(tmp, "PRINT") == 0)
         {
-            if(PRINT())
-            {
-                PrintSuccess("PRINT");
-            }
-            else
+            tmp = strtok(NULL, " ");
+            if(!(PRINT(tmp)))
             {
                 PrintErrorCode(500);
             }
         }
         else if(strcmp(tmp, "DELETE") == 0)
         {
-            if(DELETE())
+            tmp = strtok(NULL, " ");
+            if(DELETE(tmp))
             {
                 PrintSuccess("DELETE");
             }
@@ -118,6 +114,10 @@ void Manager::run(const char* command)
             PrintSuccess("EXIT");
             break;
         }
+        else if(tmp == NULL)
+        {
+            continue;
+        }
         else
         {
             flog << "========== ERROR ==========" << endl;
@@ -131,44 +131,269 @@ void Manager::run(const char* command)
 
 bool Manager::QLOAD()
 {
-    fin.open("data.txt");
-    if (!fin)
+    ofstream fdata;
+    fdata.open("data.txt");
+    if (!fdata)
     {
         return false;
     }
 
     char input[INPUT_SIZE];
-    cin.getline(input, INPUT_SIZE);
+
+    while(!fdata.eof())
+    {
+        cin.getline(input, INPUT_SIZE);
     
-    char* inputName = strtok(input, " ");
-    char* inputAge = strtok(input, " ");
-    //해야하는 부분
+        char* temp = strtok(input, " ");
+        char* name = temp;
+        temp = strtok(NULL, " ");
+        char* charAge = temp;
+        temp = strtok(NULL, " ");
+        char* id = temp;
 
+        if(name == NULL || charAge == NULL || id == NULL)
+        {
+            fdata.close();
+            return false;
+        }
+
+        for(int i = 0; name[i] != '\0'; i++)
+        {
+            if(isalpha(name[i]) == false)
+            {
+                fdata.close();
+                return false;
+            }
+        }
+
+        for(int i = 0; charAge[i] != '\0'; i++)
+        {
+            if(isdigit(charAge[i]) == false)
+            {
+                return false;
+            }
+        }
+
+        int age = atoi(charAge);
+        if(age < 10 || age > 69)
+        {
+            return false;
+        }
+
+        for(int i = 0; id[i] != '\0'; i++)
+        {
+            if(isalnum(id[i]) == false)
+            {
+                return false;
+            }
+        }
+
+        AccountQueueNode* data = new AccountQueueNode;
+        data->SetName(name);
+        data->SetAge(age);
+        data->SetId(id);
+
+        if(ds_queue->PUSH(data) == false)
+        {
+            fdata.close();
+            return false;
+        }
+    }
+
+    fdata.close();
+    return true;
 }
 
-bool Manager::ADD()
+bool Manager::ADD(char* input)
 {
 
+    char* name = input;
+    input = strtok(NULL, " ");
+    char* charAge = input;
+    input = strtok(NULL, " ");
+    char* id = input;
+    
+    if(name == NULL || charAge == NULL || id == NULL)
+    {
+        return false;
+    }
+
+    for(int i = 0; name[i] != '\0'; i++)
+    {
+        if(isalpha(name[i]) == false)
+        {
+            return false;
+        }
+    }
+
+    for(int i = 0; charAge[i] != '\0'; i++)
+    {
+        if(isdigit(charAge[i]) == false)
+        {
+            return false;
+        }
+    }
+
+    int age = atoi(charAge);
+    if(age < 10 || age > 69)
+    {
+        return false;
+    }
+
+    for(int i = 0; id[i] != '\0'; i++)
+    {
+        if(isalnum(id[i]) == false)
+        {
+            return false;
+        }
+    }
+
+    AccountQueueNode* data = new AccountQueueNode;
+    data->SetName(name);
+    data->SetAge(age);
+    data->SetId(id);
+
+    return ds_queue->PUSH(data);
 }
 
-bool Manager::QPOP()
+bool Manager::QPOP(char* input)
 {
+    for(int i = 0; input[i] != '\0'; i++)
+    {
+        if(isdigit(input[i]) == false)
+        {
+            return false;
+        }
+    }
 
+    int intInput = atoi(input);
+
+    if(intInput > ds_queue->SIZE())
+    {
+        return false;
+    }
+
+    for(int i = 0; i < intInput; i++)
+    {
+        AccountQueueNode* temp = ds_queue->POP();
+        if(ds_bst->Insert(ds_list->Insert(temp)) == false)
+        {
+            return false;
+        }
+        delete temp;   
+    }
+
+    return true;
 }
 
-bool Manager::SEARCH()
+bool Manager::SEARCH(char* input)
 {
+    char* mode = input;
+    input = strtok(NULL, " ");
+    char* find = input;
 
+    if(mode == NULL && find == NULL)
+    {
+        return false;
+    }
+
+    if(strcmp(mode, "user") == 0)
+    {
+        return ds_list->Search(find);
+    }
+    else if(strcmp(mode, "id") == 0)
+    {
+        return ds_bst->Search_Id(find);
+    }
+    else
+    {
+        return false;
+    }
 }
 
-bool Manager::PRINT()
+bool Manager::PRINT(char* input)
 {
+    char* mode = input;
+    if(strcmp(mode, "L") && ds_list->GetRoot() != NULL)
+    {
+        flog << "========== PRINT ==========" << endl;
+        flog << "LIST" << endl;
+        ds_list->Print_L(ds_list->GetRoot());
 
+        flog << "===========================" << endl << endl;
+        
+        return true;
+    }
+    else if(strcmp(mode, "B") && ds_bst->GetRoot() != NULL)
+    {
+        input = strtok(NULL, " ");
+        char* mode2 = input;
+
+        if(strcmp(mode2, "PRE") == 0)
+        {
+            flog << "========== PRINT ==========" << endl;
+            flog << "BST PRE" << endl;
+            ds_bst->Print_PRE(ds_bst->GetRoot());
+
+            flog << "===========================" << endl << endl;
+
+            return true; 
+        }
+        if(strcmp(mode2, "IN") == 0)
+        {
+            flog << "========== PRINT ==========" << endl;
+            flog << "BST IN" << endl;
+            ds_bst->Print_IN(ds_bst->GetRoot());
+
+            flog << "===========================" << endl << endl;
+        
+            return true;
+        }
+        if(strcmp(mode2, "POST") == 0)
+        {
+            flog << "========== PRINT ==========" << endl;
+            flog << "BST POST" << endl;
+            ds_bst->Print_POST(ds_bst->GetRoot());
+
+            flog << "===========================" << endl << endl;
+
+            return true;
+        }
+        if(strcmp(mode2, "LEVEL") == 0)
+        {
+            flog << "========== PRINT ==========" << endl;
+            flog << "BST LEVEL" << endl;
+            ds_bst->Print_LEVEL();
+
+            flog << "===========================" << endl << endl;
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    else if(strcmp(mode, "H") && ds_heap->GetSize() != 1)
+    {
+        flog << "========== PRINT ==========" << endl;
+        flog << "Heap" << endl;
+        ds_heap->Print();
+
+        flog << "===========================" << endl << endl;
+
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
-bool Manager::DELETE()
+bool Manager::DELETE(char* input)
 {
-
+    //to do
+    
 }
 
 bool Manager::HLOAD()

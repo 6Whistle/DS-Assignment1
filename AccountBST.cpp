@@ -90,7 +90,13 @@ bool AccountBST::Search_Id(char* id)
     {
         if(strcmp(id,temp->GetId()) == 0)
         {
-            //출력 구현 필요
+            ofstream flog;
+            flog.open("log.txt", ios::app);
+            flog << "========== SEARCH ==========" << endl;
+            flog << "ID" << endl;
+            flog << temp->GetId() << "/" << temp->GetName() << endl;
+            flog << "===========================" << endl << endl; 
+            flog.close();
             return true;
         }
 
@@ -239,7 +245,11 @@ void AccountBST::Print_PRE(AccountBSTNode* node)
 {
     if(node)
     {
-        //출력
+        ofstream flog;
+        flog.open("log.txt", ios::app);
+        flog << node->GetId() << "/" << node->GetName() << endl;
+        flog.close();
+
         Print_PRE(node->GetLeft());
         Print_PRE(node->GetRight());
     }
@@ -253,9 +263,16 @@ void AccountBST::Print_IN(AccountBSTNode* node)
     {
 
          Print_PRE(node->GetLeft());
-         //출력
+
+        ofstream flog;
+        flog.open("log.txt", ios::app);
+        flog << node->GetId() << "/" << node->GetName() << endl;
+        flog.close();
+
         Print_PRE(node->GetRight());
     }
+
+    return;
 }
 
 void AccountBST::Print_POST(AccountBSTNode* node)
@@ -264,13 +281,21 @@ void AccountBST::Print_POST(AccountBSTNode* node)
     {
         Print_PRE(node->GetLeft());
         Print_PRE(node->GetRight());
-        //출력
+
+        ofstream flog;
+        flog.open("log.txt", ios::app);
+        flog << node->GetId() << "/" << node->GetName() << endl;
+        flog.close();
     }
+
+    return;
 }
 
 void AccountBST::Print_LEVEL()
 {
     queue <AccountBSTNode*> levelQueue;
+    ofstream flog;
+    flog.open("log.txt", ios::app);
 
     levelQueue.push(Root);
 
@@ -279,11 +304,16 @@ void AccountBST::Print_LEVEL()
         AccountBSTNode *temp = levelQueue.front();
         levelQueue.pop();
 
-        //print
+
+
+        flog << temp->GetId() << "/" << temp->GetName() << endl;
         if(temp->GetLeft())
         levelQueue.push(temp->GetLeft());
         if(temp->GetRight())
         levelQueue.push(temp->GetRight());
         
     }
+
+    flog.close();
+    return;
 }

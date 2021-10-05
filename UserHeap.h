@@ -14,5 +14,6 @@ public:
 	~UserHeap();
 
 	bool Insert(int agegroup);
+	int GetSize();
 	void Print();
 };

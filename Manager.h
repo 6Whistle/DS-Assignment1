@@ -21,11 +21,11 @@ public:
 
 	void run(const char* command);
 	bool QLOAD();
-	bool ADD();
-	bool QPOP();
-	bool SEARCH();
-	bool PRINT();
-	bool DELETE();
+	bool ADD(char* input);
+	bool QPOP(char* input);
+	bool SEARCH(char* input);
+	bool PRINT(char* input);
+	bool DELETE(char* input);
 	bool HLOAD();
 	bool EXIT();
 
