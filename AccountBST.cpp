@@ -43,11 +43,11 @@ bool AccountBST::Insert(AccountBSTNode* node)
 
     while(true)
     {
-       if(strcmp(node->GetId(), temp->GetId()) == 0)
+       if(CompareName(node->GetId(), temp->GetId()) == 0)
         {
             return false;
         }
-        else if(strcmp(node->GetId(), temp->GetId()) > 0)
+        else if(CompareName(node->GetId(), temp->GetId()) > 0)
         {
 
             if(temp->GetLeft() == NULL)
@@ -88,7 +88,7 @@ bool AccountBST::Search_Id(char* id)
     AccountBSTNode* temp = this->Root;
     while(true)
     {
-        if(strcmp(id,temp->GetId()) == 0)
+        if(CompareName(id,temp->GetId()) == 0)
         {
             ofstream flog;
             flog.open("log.txt", ios::app);
@@ -100,7 +100,7 @@ bool AccountBST::Search_Id(char* id)
             return true;
         }
 
-        if(strcmp(id,temp->GetId()) > 0)
+        if(CompareName(id,temp->GetId()) > 0)
         {
             if(temp->GetLeft() == NULL)
             {
@@ -132,11 +132,11 @@ bool AccountBST::Delete(char* id)
     AccountBSTNode* parent = NULL;
 
 
-    while(temp && strcmp(id, temp->GetId()) != 0)
+    while(temp && CompareName(id, temp->GetId()) != 0)
     {
         parent = temp;
 
-        if(strcmp(id,temp->GetId()) > 0)
+        if(CompareName(id,temp->GetId()) > 0)
         {
             temp = temp->GetLeft();
         }
@@ -237,8 +237,7 @@ bool AccountBST::Delete(char* id)
         delete temp;
     }
 
-    
-
+    return true;
 }
 
 void AccountBST::Print_PRE(AccountBSTNode* node)
@@ -316,4 +315,78 @@ void AccountBST::Print_LEVEL()
 
     flog.close();
     return;
+}
+
+bool AccountBST::CompareName(char* cm1, char* cm2)
+{
+    int size1 = strlen(cm1);
+    int size2 = strlen(cm2);
+    
+    char name1[size1];
+    char name2[size2];
+
+    int i = 0;
+    for(int i = 0; i < size1 && cm1[i] != '\0'; i++)
+    {
+        if(cm1[i] >= 'A' && cm1[i] <= 'Z')
+        {
+            name1[i] = cm1[i] - ('A' - 'a');
+        }
+        else
+        {
+            name1[i] = cm1[i];
+        }
+    }
+
+    i = 0;
+    for(int i = 0; i < size2 && cm2[i] != '\0'; i++)
+    {
+        if(cm2[i] >= 'A' && cm2[i] <= 'Z')
+        {
+            name2[i] = cm2[i] - ('A' - 'a');
+        }
+        else
+        {
+            name2[i] = cm2[i];
+        }
+    }
+        
+    return strcmp(name1, name2);
+}
+
+void AccountBST::FindNameFromId(char* id, char* name)
+{
+    if(Root == NULL)
+    {
+        return;
+    }
+
+    AccountBSTNode* temp = this->Root;
+    while(true)
+    {
+        if(CompareName(id,temp->GetId()) == 0)
+        {
+            name = temp->GetName();
+            return;
+        }
+
+        if(CompareName(id,temp->GetId()) > 0)
+        {
+            if(temp->GetLeft() == NULL)
+            {
+                return;
+            }
+
+            temp = temp->GetLeft();
+        }
+        else
+        {
+            if(temp->GetRight() == NULL)
+            {
+                return;
+            }
+
+            temp = temp->GetRight();
+        }
+    }
 }

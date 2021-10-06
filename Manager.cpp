@@ -392,18 +392,40 @@ bool Manager::PRINT(char* input)
 
 bool Manager::DELETE(char* input)
 {
-    //to do
+    char* findname = NULL;
+    ds_bst->FindNameFromId(input, findname);
+
+    if(findname)
+    {
+        return ds_list->Delete_Account(findname, input);
+    }
     
+    return false;
 }
 
 bool Manager::HLOAD()
 {
+    UserListNode* temp = ds_list->GetRoot();
 
+    while(temp)
+    {
+        int agegroup = (temp->GetAge() / 10) * 10;
+        if(ds_heap->Insert(agegroup) == false)
+        {
+            return false;
+        }
+        temp = temp->GetNext();
+    }
 }
 
 bool Manager::EXIT()
 {
+    delete ds_queue;
+    delete ds_list;
+    delete ds_bst;
+    delete ds_heap;
 
+    return true;
 }
 
 void Manager::PrintErrorCode(int num)

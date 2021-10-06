@@ -22,4 +22,7 @@ public:
 	void Print_IN(AccountBSTNode* node);
 	void Print_POST(AccountBSTNode* node);
 	void Print_LEVEL();
+
+	bool CompareName(char* cm1, char* cm2);
+	void FindNameFromId(char* id, char* name);
 };
