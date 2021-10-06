@@ -131,7 +131,7 @@ void Manager::run(const char* command)
 
 bool Manager::QLOAD()
 {
-    ofstream fdata;
+    ifstream fdata;
     fdata.open("data.txt");
     if (!fdata)
     {
@@ -142,7 +142,7 @@ bool Manager::QLOAD()
 
     while(!fdata.eof())
     {
-        cin.getline(input, INPUT_SIZE);
+        fdata.getline(input, INPUT_SIZE);
     
         char* temp = strtok(input, " ");
         char* name = temp;
@@ -314,7 +314,7 @@ bool Manager::SEARCH(char* input)
 bool Manager::PRINT(char* input)
 {
     char* mode = input;
-    if(strcmp(mode, "L") && ds_list->GetRoot() != NULL)
+    if(strcmp(mode, "L") == 0 && ds_list->GetRoot() != NULL)
     {
         flog << "========== PRINT ==========" << endl;
         flog << "LIST" << endl;
@@ -324,7 +324,7 @@ bool Manager::PRINT(char* input)
         
         return true;
     }
-    else if(strcmp(mode, "B") && ds_bst->GetRoot() != NULL)
+    else if(strcmp(mode, "B") == 0 && ds_bst->GetRoot() != NULL)
     {
         input = strtok(NULL, " ");
         char* mode2 = input;
@@ -374,7 +374,7 @@ bool Manager::PRINT(char* input)
             return false;
         }
     }
-    else if(strcmp(mode, "H") && ds_heap->GetSize() != 1)
+    else if(strcmp(mode, "H") == 0 && ds_heap->GetSize() != 1)
     {
         flog << "========== PRINT ==========" << endl;
         flog << "Heap" << endl;

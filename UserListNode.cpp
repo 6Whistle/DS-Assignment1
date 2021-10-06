@@ -2,9 +2,9 @@
 
 UserListNode::UserListNode()
 {
-    Name = NULL;
+    this->Name = new char[32];
     Age = 0;
-    AccNum = 0;
+    AccNum = 1;
     pNext = NULL;
     pHead = NULL;
 }
@@ -36,13 +36,6 @@ AccountBSTNode* UserListNode::GetHead()
 
 void UserListNode::SetName(char* name)
 {
-    if(this->Name)
-    {
-        delete[] this->Name;
-    }
-
-    int size = strlen(name);
-    this->Name = new char[size];
     strcpy(this->Name, name);
 
     return;

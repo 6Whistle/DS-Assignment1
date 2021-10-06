@@ -47,7 +47,7 @@ bool AccountBST::Insert(AccountBSTNode* node)
         {
             return false;
         }
-        else if(CompareName(node->GetId(), temp->GetId()) > 0)
+        else if(CompareName(node->GetId(), temp->GetId()) < 0)
         {
 
             if(temp->GetLeft() == NULL)
@@ -100,7 +100,7 @@ bool AccountBST::Search_Id(char* id)
             return true;
         }
 
-        if(CompareName(id,temp->GetId()) > 0)
+        if(CompareName(id,temp->GetId()) < 0)
         {
             if(temp->GetLeft() == NULL)
             {
@@ -317,16 +317,13 @@ void AccountBST::Print_LEVEL()
     return;
 }
 
-bool AccountBST::CompareName(char* cm1, char* cm2)
+int AccountBST::CompareName(char* cm1, char* cm2)
 {
-    int size1 = strlen(cm1);
-    int size2 = strlen(cm2);
-    
-    char name1[size1];
-    char name2[size2];
+    char name1[32];
+    char name2[32];
 
     int i = 0;
-    for(int i = 0; i < size1 && cm1[i] != '\0'; i++)
+    for(int i = 0; i < 32 && cm1[i] != '\0'; i++)
     {
         if(cm1[i] >= 'A' && cm1[i] <= 'Z')
         {
@@ -339,7 +336,7 @@ bool AccountBST::CompareName(char* cm1, char* cm2)
     }
 
     i = 0;
-    for(int i = 0; i < size2 && cm2[i] != '\0'; i++)
+    for(int i = 0; i < 32 && cm2[i] != '\0'; i++)
     {
         if(cm2[i] >= 'A' && cm2[i] <= 'Z')
         {

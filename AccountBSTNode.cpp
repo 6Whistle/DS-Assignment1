@@ -2,8 +2,8 @@
 
 AccountBSTNode::AccountBSTNode()
 {
-    this->Name = NULL;
-    this->Id = NULL;
+    this->Name = new char[32];
+    this->Id = new char[32];
 
     this->pLeft = NULL;
     this->pRight = NULL;
@@ -50,28 +50,12 @@ AccountBSTNode* AccountBSTNode::GetNext()
 
 void AccountBSTNode::SetName(char* name)
 {
-    int size = strlen(name);
-
-    if(this->Name)
-    {
-        delete[] this->Name;
-    }
-
-    this->Name = new char[size];
     strcpy(this->Name, name);
     return;
 }
 
 void AccountBSTNode::SetId(char* disease)
 {
-    int size = strlen(disease);
-
-    if(this->Id)
-    {
-        delete[] this->Id;
-    }
-
-    this->Id = new char[size];
     strcpy(this->Id, disease);
     return;
 }

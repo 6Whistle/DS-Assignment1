@@ -44,17 +44,19 @@ bool AccountQueue::PUSH(AccountQueueNode* node)
     }
 
     AccountQueueNode* temp = Front;
+    AccountQueueNode* prev = NULL;
 
-    while(temp->GetNext())
+    while(temp)
     {
         if(strcmp(temp->GetName(), node->GetName()) == 0 && temp->GetAge() == node->GetAge() && strcmp(temp->GetId(), node->GetId()) == 0)
         {
             delete node;
             return false;
         }
+        prev = temp;
         temp = temp->GetNext();
     }
-    temp->SetNext(node);
+    prev->SetNext(node);
     queue_size++;
     return true;
 }

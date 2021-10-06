@@ -2,16 +2,16 @@
 
 AccountQueueNode::AccountQueueNode()
 {
-    User_Name = NULL;
+    this->User_Name = new char[32];
     User_age = -1;
-    User_Id = NULL;
+    this->User_Id = new char[32];
     pNext = NULL;
 }
 
 AccountQueueNode::~AccountQueueNode()
 {
-    delete User_Name;
-    delete User_Id;
+    delete[] User_Name;
+    delete[] User_Id;
 }
 
 char* AccountQueueNode::GetName()
@@ -34,8 +34,6 @@ AccountQueueNode* AccountQueueNode::GetNext()
 }
 void AccountQueueNode::SetName(char* name)
 {
-    int size = strlen(name);
-    User_Name = new char[size];
     strcpy(User_Name, name);
 
     return;
@@ -50,8 +48,6 @@ void AccountQueueNode::SetAge(int age)
 
 void AccountQueueNode::SetId(char* id)
 {
-    int size = strlen(id);
-    User_Id = new char[size];
     strcpy(User_Id, id);
 
     return;
