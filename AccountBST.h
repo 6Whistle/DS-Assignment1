@@ -24,5 +24,5 @@ public:
 	void Print_LEVEL();
 
 	int CompareName(char* cm1, char* cm2);
-	void FindNameFromId(char* id, char* name);
+	char* FindNameFromId(char* id);
 };

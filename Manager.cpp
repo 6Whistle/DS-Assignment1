@@ -12,10 +12,7 @@ Manager::Manager()
 
 Manager::~Manager()
 {
-    delete ds_queue;
-    delete ds_bst;
-    delete ds_heap;
-    delete ds_list;
+
 }
 
 void Manager::run(const char* command)
@@ -292,7 +289,7 @@ bool Manager::SEARCH(char* input)
     input = strtok(NULL, " ");
     char* find = input;
 
-    if(mode == NULL && find == NULL)
+    if(mode == NULL || find == NULL)
     {
         return false;
     }
@@ -392,12 +389,17 @@ bool Manager::PRINT(char* input)
 
 bool Manager::DELETE(char* input)
 {
-    char* findname = NULL;
-    ds_bst->FindNameFromId(input, findname);
+    char* findname = ds_bst->FindNameFromId(input);
 
     if(findname)
     {
-        return ds_list->Delete_Account(findname, input);
+        bool state = ds_list->Delete_Account(findname, input);
+        if(state == true)
+        {
+            ds_bst->Delete(input);
+        }
+
+        return state;
     }
     
     return false;
@@ -405,6 +407,12 @@ bool Manager::DELETE(char* input)
 
 bool Manager::HLOAD()
 {
+    if (ds_heap->GetSize() != 1)
+    {
+        delete ds_heap;
+        ds_heap = new UserHeap;
+    }
+
     UserListNode* temp = ds_list->GetRoot();
 
     while(temp)

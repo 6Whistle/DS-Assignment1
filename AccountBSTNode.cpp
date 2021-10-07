@@ -19,7 +19,7 @@ AccountBSTNode::~AccountBSTNode()
 
     if(this->Id)
     {
-        delete[] this->Name;
+        delete[] this->Id;
     }
 }
 

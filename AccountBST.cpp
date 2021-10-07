@@ -261,14 +261,14 @@ void AccountBST::Print_IN(AccountBSTNode* node)
     if(node)
     {
 
-         Print_PRE(node->GetLeft());
+        Print_IN(node->GetLeft());
 
         ofstream flog;
         flog.open("log.txt", ios::app);
         flog << node->GetId() << "/" << node->GetName() << endl;
         flog.close();
 
-        Print_PRE(node->GetRight());
+        Print_IN(node->GetRight());
     }
 
     return;
@@ -278,8 +278,8 @@ void AccountBST::Print_POST(AccountBSTNode* node)
 {
     if(node)
     {
-        Print_PRE(node->GetLeft());
-        Print_PRE(node->GetRight());
+        Print_POST(node->GetLeft());
+        Print_POST(node->GetRight());
 
         ofstream flog;
         flog.open("log.txt", ios::app);
@@ -319,43 +319,57 @@ void AccountBST::Print_LEVEL()
 
 int AccountBST::CompareName(char* cm1, char* cm2)
 {
-    char name1[32];
-    char name2[32];
+    char ch1, ch2;
+    int i;
 
-    int i = 0;
-    for(int i = 0; i < 32 && cm1[i] != '\0'; i++)
+    for (i = 0; i < 32 && cm1[i] != '\0' && cm2[i] != '\0'; i++)
     {
-        if(cm1[i] >= 'A' && cm1[i] <= 'Z')
+        if (isupper(cm1[i]))
         {
-            name1[i] = cm1[i] - ('A' - 'a');
+            ch1 = tolower(cm1[i]);
         }
         else
         {
-            name1[i] = cm1[i];
+            ch1 = cm1[i];
         }
-    }
 
-    i = 0;
-    for(int i = 0; i < 32 && cm2[i] != '\0'; i++)
-    {
-        if(cm2[i] >= 'A' && cm2[i] <= 'Z')
+        if (isupper(cm2[i]))
         {
-            name2[i] = cm2[i] - ('A' - 'a');
+            ch2 = tolower(cm2[i]);
         }
         else
         {
-            name2[i] = cm2[i];
+            ch2 = cm2[i];
+        }
+
+        if (ch1 < ch2)
+        {
+            return -1;
+        }
+        else if (ch1 > ch2)
+        {
+            return 1;
         }
     }
-        
-    return strcmp(name1, name2);
+
+    if (cm1[i] == '\0' && cm2[i] != '\0')
+    {
+        return -1;
+    }
+
+    if (cm1[i] != '\0' && cm2[i] == '\0')
+    {
+        return 1;
+    }
+
+    return 0;
 }
 
-void AccountBST::FindNameFromId(char* id, char* name)
+char* AccountBST::FindNameFromId(char* id)
 {
     if(Root == NULL)
     {
-        return;
+        return NULL;
     }
 
     AccountBSTNode* temp = this->Root;
@@ -363,15 +377,14 @@ void AccountBST::FindNameFromId(char* id, char* name)
     {
         if(CompareName(id,temp->GetId()) == 0)
         {
-            name = temp->GetName();
-            return;
+            return temp->GetName();
         }
 
-        if(CompareName(id,temp->GetId()) > 0)
+        if(CompareName(id,temp->GetId()) < 0)
         {
             if(temp->GetLeft() == NULL)
             {
-                return;
+                return NULL;
             }
 
             temp = temp->GetLeft();
@@ -380,7 +393,7 @@ void AccountBST::FindNameFromId(char* id, char* name)
         {
             if(temp->GetRight() == NULL)
             {
-                return;
+                return NULL;
             }
 
             temp = temp->GetRight();

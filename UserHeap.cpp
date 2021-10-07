@@ -26,7 +26,7 @@ int UserHeap::GetSize()
 
 bool UserHeap::Insert(int agegroup)
 {
-    int i = 0;
+    int i = 1;
     while(i < Heap.size() && Heap[i]->GetAgeGroup() != agegroup)
     {
         i++;
