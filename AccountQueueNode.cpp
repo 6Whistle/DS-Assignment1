@@ -14,39 +14,39 @@ AccountQueueNode::~AccountQueueNode()
     delete[] User_Id;
 }
 
-char* AccountQueueNode::GetName()
+char* AccountQueueNode::GetName()       //get User_Name
 {
     return User_Name;
 }
 
-int AccountQueueNode::GetAge()
+int AccountQueueNode::GetAge()          //get User_age
 {
     return User_age;
 }
 
-char* AccountQueueNode::GetId()
+char* AccountQueueNode::GetId()         //get User_Id
 {
     return User_Id;
 }
-AccountQueueNode* AccountQueueNode::GetNext()
+AccountQueueNode* AccountQueueNode::GetNext()       //get pNext
 {
     return pNext;
 }
-void AccountQueueNode::SetName(char* name)
+void AccountQueueNode::SetName(char* name)          //set User_Name
 {
     strcpy(User_Name, name);
 
     return;
 }
 
-void AccountQueueNode::SetAge(int age)
+void AccountQueueNode::SetAge(int age)          //set User_age
 {
     User_age = age;
 
     return;
 }
 
-void AccountQueueNode::SetId(char* id)
+void AccountQueueNode::SetId(char* id)          //set User_Id
 {
     strcpy(User_Id, id);
 

@@ -2,7 +2,7 @@
 
 AccountBSTNode::AccountBSTNode()
 {
-    this->Name = new char[32];
+    this->Name = new char[32];          //assign Name and Id
     this->Id = new char[32];
 
     this->pLeft = NULL;
@@ -12,7 +12,7 @@ AccountBSTNode::AccountBSTNode()
 
 AccountBSTNode::~AccountBSTNode()
 {
-    if(this->Name)
+    if(this->Name)                  //if Name and Id exist, delete them
     {
         delete[] this->Name;
     }
@@ -23,55 +23,55 @@ AccountBSTNode::~AccountBSTNode()
     }
 }
 
-char* AccountBSTNode::GetName()
+char* AccountBSTNode::GetName()     //get Name
 {
     return this->Name;
 }
 
-char* AccountBSTNode::GetId()
+char* AccountBSTNode::GetId()       //get Id
 {
     return this->Id;
 }
 
-AccountBSTNode* AccountBSTNode::GetLeft()
+AccountBSTNode* AccountBSTNode::GetLeft()       //get pLeft
 {
     return this->pLeft;
 }
 
-AccountBSTNode* AccountBSTNode::GetRight()
+AccountBSTNode* AccountBSTNode::GetRight()      //get pRight
 {
     return this->pRight;
 }
 
-AccountBSTNode* AccountBSTNode::GetNext()
+AccountBSTNode* AccountBSTNode::GetNext()       //get pNext
 {
     return this->pNext;
 }
 
-void AccountBSTNode::SetName(char* name)
+void AccountBSTNode::SetName(char* name)        //set Name
 {
     strcpy(this->Name, name);
     return;
 }
 
-void AccountBSTNode::SetId(char* disease)
+void AccountBSTNode::SetId(char* disease)       //SET Id
 {
     strcpy(this->Id, disease);
     return;
 }
 
-void AccountBSTNode::SetLeft(AccountBSTNode* node)
+void AccountBSTNode::SetLeft(AccountBSTNode* node)      //set pLeft
 {
     this->pLeft = node;
     return;
 }
 
-void AccountBSTNode::SetRight(AccountBSTNode* node)
+void AccountBSTNode::SetRight(AccountBSTNode* node)     //set pRight
 {
     this->pRight = node;
     return;
 }
-void AccountBSTNode::SetNext(AccountBSTNode* node)
+void AccountBSTNode::SetNext(AccountBSTNode* node)      //set pNext
 {
     this->pNext = node;
     return;
