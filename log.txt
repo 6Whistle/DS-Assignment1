@@ -1,5 +1,5 @@
 ========== QLOAD ==========
-Dkevin/42/dangun
+dave/42/dangun
 bob/17/zlxen2
 stuart/33/aaabbc
 tom/22/batman
@@ -9,7 +9,11 @@ elsa/24/zzc
 ===========================
 
 ========== ADD ==========
-jiwon/23/qwd5320
+JunHwei/23/qqqqqq
+===========================
+
+========== ERROR ==========
+300
 ===========================
 
 ========== QPOP ==========
@@ -18,12 +22,12 @@ Success
 
 ========== PRINT ==========
 LIST
-Dkevin/42/1
+dave/42/1
 bob/17/2
 stuart/33/1
 tom/22/2
 elsa/24/1
-jiwon/23/1
+JunHwei/23/1
 ===========================
 
 ========== DELETE ==========
@@ -57,10 +61,6 @@ Success
 ========== DELETE ==========
 Success
 ============================
-
-========== ERROR ==========
-500
-===========================
 
 ========== ERROR ==========
 500
@@ -71,15 +71,12 @@ Success
 ===========================
 
 ========== ADD ==========
-jiwon/23/wldnjs
+JunHwei/23/qqqqqq
 ===========================
 
-========== QPOP ==========
-Success
-============================
-
 ========== QLOAD ==========
-Dkevin/42/dangun
+JunHwei/23/qqqqqq
+dave/42/dangun
 bob/17/zlxen2
 stuart/33/aaabbc
 tom/22/batman
@@ -88,19 +85,94 @@ tom/22/zza
 elsa/24/zzc
 ===========================
 
+========== QPOP ==========
+Success
+============================
+
 ========== PRINT ==========
 LIST
-jiwon/23/1
+JunHwei/23/1
+dave/42/1
+bob/17/2
+stuart/33/1
+tom/22/2
+elsa/24/1
 ===========================
 
 ========== PRINT ==========
 BST PRE
-wldnjs/jiwon
+qqqqqq/JunHwei
+dangun/dave
+aaabbc/stuart
+5102842/bob
+batman/tom
+zlxen2/bob
+zza/tom
+zzc/elsa
 ===========================
 
 ========== PRINT ==========
 BST IN
-wldnjs/jiwon
+5102842/bob
+aaabbc/stuart
+batman/tom
+dangun/dave
+qqqqqq/JunHwei
+zlxen2/bob
+zza/tom
+zzc/elsa
+===========================
+
+========== PRINT ==========
+BST POST
+5102842/bob
+batman/tom
+aaabbc/stuart
+dangun/dave
+zzc/elsa
+zza/tom
+zlxen2/bob
+qqqqqq/JunHwei
+===========================
+
+========== PRINT ==========
+BST LEVEL
+qqqqqq/JunHwei
+dangun/dave
+zlxen2/bob
+aaabbc/stuart
+zza/tom
+5102842/bob
+batman/tom
+zzc/elsa
+===========================
+
+========== HLOAD ==========
+Success
+============================
+
+========== PRINT ==========
+Heap
+1/40
+1/30
+1/10
+3/20
+===========================
+
+========== ERROR ==========
+400
+===========================
+
+========== SEARCH ==========
+User
+bob/17
+zlxen2
+5102842
+===========================
+
+========== SEARCH ==========
+ID
+qqqqqq/JunHwei
 ===========================
 
 ========== EXIT ==========

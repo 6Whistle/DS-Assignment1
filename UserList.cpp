@@ -89,7 +89,7 @@ bool UserList::Search(char* name)           //Search data by name
             AccountBSTNode* idTemp = temp->GetHead();
             while(idTemp)                       //print all of id data
             {
-                flog << idTemp->GetId();
+                flog << idTemp->GetId() << endl;
                 idTemp = idTemp->GetNext();
             }
 
@@ -168,7 +168,7 @@ void UserList::Print_L(UserListNode* node)      //print list
     flog.open("log.txt", ios::app);
     flog << node->GetName() << "/" << node->GetAge() << "/" << node->GetAccNum() << endl;       //print data
     flog.close();
-    Print_L(node->GetNext());
+    Print_L(node->GetNext());       //print next node
 
     return;
 }

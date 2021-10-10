@@ -432,6 +432,11 @@ bool Manager::HLOAD()       //delete existed ds_heap and create new heap. input 
 
     UserListNode* temp = ds_list->GetRoot();
 
+    if(temp == NULL)        //if list isn't exist, return false
+    {
+        return false;
+    }
+
     while(temp)         //input all of data(list) at ds_heap
     {
         int agegroup = (temp->GetAge() / 10) * 10;      //throws units digit of age
@@ -441,6 +446,8 @@ bool Manager::HLOAD()       //delete existed ds_heap and create new heap. input 
         }
         temp = temp->GetNext();     //next data(list)
     }
+
+    return true;
 }
 
 bool Manager::EXIT()                //DELETE ds_queue, ds_list, ds_bst, ds_heap
